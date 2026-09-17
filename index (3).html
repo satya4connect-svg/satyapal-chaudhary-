@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ===================================================================
+     EDIT THESE FIRST — business name, phone, email, address
+     Change the text in the lines below and your whole site updates.
+     WhatsApp number format = 91 + your 10-digit number (no +, no spaces)
+     =================================================================== -->
+
+<title>SP PCB Design — PCB design, prototyping and electronic components, Noida</title>
+<meta name="description" content="PCB design, circuit development, prototyping, repair and electronic component supply. 14+ years of experience. Noida, Uttar Pradesh.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  /* ---- COLOURS: change these six lines to restyle the whole site ---- */
+  :root{
+    --board:#0B2A22;        /* dark solder-mask green (page background) */
+    --board-deep:#071B16;   /* darker panel */
+    --board-soft:#123A30;   /* lifted panel / borders */
+    --copper:#C4832F;       /* copper trace */
+    --gold:#E7B75F;         /* gold pad / highlight */
+    --silk:#F1F4F1;         /* silkscreen white (main text) */
+    --silk-dim:#9DB3AA;     /* secondary text */
+    --maxw:1080px;
+  }
+  /* The site is dark by design, so it looks the same in light and dark mode. */
+  :root:not([data-theme="light"]){color-scheme:dark}
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--board);
+    color:var(--silk);
+    font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%}
+  a{color:var(--gold)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+  h1,h2,h3{line-height:1.15;margin:0;font-weight:600;letter-spacing:-0.02em}
+  h2{font-size:clamp(1.5rem,3.4vw,2.1rem);margin-bottom:.6rem}
+  p{max-width:68ch}
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    border-bottom:1px solid var(--board-soft);
+    background:rgba(7,27,22,.85);
+    backdrop-filter:blur(8px);
+    position:sticky;top:0;z-index:20;
+  }
+  .topbar .wrap{display:flex;align-items:center;gap:20px;min-height:68px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--silk);margin-right:auto}
+  .brand-mark{
+    width:34px;height:34px;flex:none;border-radius:5px;
+    border:1.5px solid var(--copper);
+    display:grid;place-items:center;
+    font-family:"IBM Plex Mono",monospace;font-size:14px;color:var(--gold);
+    background:var(--board-deep);
+  }
+  .brand-name{font-weight:700;font-size:1.06rem;letter-spacing:-.01em}
+  .brand-sub{display:block;font-size:.72rem;color:var(--silk-dim);letter-spacing:.01em;font-weight:400}
+  .nav{display:flex;gap:22px;align-items:center;font-size:.93rem}
+  .nav a{color:var(--silk-dim);text-decoration:none}
+  .nav a:hover{color:var(--silk)}
+  @media (max-width:640px){ .nav{display:none} }
+
+  .btn{
+    display:inline-block;padding:12px 20px;border-radius:6px;
+    font-weight:600;font-size:.95rem;text-decoration:none;
+    border:1.5px solid var(--copper);color:var(--gold);background:transparent;
+    transition:background .15s ease,color .15s ease;
+  }
+  .btn:hover{background:var(--copper);color:#0B2A22}
+  .btn-solid{background:var(--copper);color:#0B2A22;border-color:var(--copper)}
+  .btn-solid:hover{background:var(--gold);border-color:var(--gold)}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--board-soft)}
+  .hero .wrap{position:relative;z-index:2;padding-top:76px;padding-bottom:84px}
+  .hero h1{font-size:clamp(2.1rem,6vw,3.7rem);font-weight:700;max-width:16ch}
+  .hero .lede{margin-top:20px;font-size:clamp(1rem,2.2vw,1.18rem);color:var(--silk-dim);max-width:52ch}
+  .hero-actions{margin-top:32px;display:flex;gap:12px;flex-wrap:wrap}
+  .hero-art{position:absolute;inset:0;z-index:1;opacity:.5;pointer-events:none}
+  .hero-art svg{width:100%;height:100%}
+
+  /* single deliberate motion: a current pulse running along one trace */
+  .pulse{stroke-dasharray:26 900;animation:run 6s linear infinite}
+  @keyframes run{from{stroke-dashoffset:930}to{stroke-dashoffset:0}}
+  @media (prefers-reduced-motion:reduce){.pulse{animation:none;stroke-dasharray:none;opacity:.35}}
+
+  /* ---------- spec strip ---------- */
+  .strip{background:var(--board-deep);border-bottom:1px solid var(--board-soft)}
+  .strip .wrap{display:flex;flex-wrap:wrap;gap:34px;padding-top:22px;padding-bottom:22px}
+  .spec{font-family:"IBM Plex Mono",monospace;font-size:.88rem;color:var(--silk-dim)}
+  .spec b{display:block;font-family:"IBM Plex Sans",sans-serif;font-size:1.32rem;color:var(--gold);font-weight:600;letter-spacing:-.01em}
+
+  /* ---------- sections ---------- */
+  section{padding:70px 0}
+  .section-head{max-width:60ch;margin-bottom:38px}
+  .section-head p{color:var(--silk-dim);margin:.5rem 0 0}
+
+  .services{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--board-soft);border:1px solid var(--board-soft);border-radius:8px;overflow:hidden}
+  .service{background:var(--board);padding:28px 26px}
+  .service h3{font-size:1.1rem;margin-bottom:8px}
+  .service p{color:var(--silk-dim);font-size:.95rem;margin:0}
+  .service .tag{font-family:"IBM Plex Mono",monospace;font-size:.75rem;color:var(--copper);display:block;margin-bottom:12px}
+
+  /* ---------- about ---------- */
+  .about{background:var(--board-deep);border-top:1px solid var(--board-soft);border-bottom:1px solid var(--board-soft)}
+  .about-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:start}
+  @media (max-width:760px){.about-grid{grid-template-columns:1fr;gap:32px}}
+  .about p{color:var(--silk-dim)}
+  .who{list-style:none;padding:0;margin:0}
+  .who li{padding:11px 0;border-bottom:1px solid var(--board-soft);font-size:.96rem}
+  .who li:first-child{border-top:1px solid var(--board-soft)}
+
+  /* ---------- contact ---------- */
+  .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:28px;margin-bottom:34px}
+  .contact-item{border-left:2px solid var(--copper);padding-left:16px}
+  .contact-item span{display:block;font-family:"IBM Plex Mono",monospace;font-size:.75rem;color:var(--silk-dim);margin-bottom:5px}
+  .contact-item a,.contact-item strong{font-size:1.06rem;color:var(--silk);text-decoration:none;font-weight:500;word-break:break-word}
+  .contact-item a:hover{color:var(--gold)}
+
+  footer{border-top:1px solid var(--board-soft);padding:26px 0;font-size:.86rem;color:var(--silk-dim)}
+  footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+  /* floating WhatsApp button on mobile */
+  .float-wa{
+    position:fixed;right:18px;bottom:18px;z-index:30;
+    background:var(--copper);color:#0B2A22;font-weight:600;
+    padding:13px 18px;border-radius:999px;text-decoration:none;
+    box-shadow:0 6px 20px rgba(0,0,0,.45);font-size:.95rem;
+  }
+  .float-wa:hover{background:var(--gold)}
+</style>
+</head>
+<body>
+
+<!-- ============================ HEADER ============================ -->
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top">
+      <span class="brand-mark">SP</span>
+      <span>
+        <span class="brand-name">SP PCB Design</span>
+        <span class="brand-sub">Noida, Uttar Pradesh</span>
+      </span>
+    </a>
+    <nav class="nav">
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn" href="tel:+919818419049">Call 98184 19049</a>
+  </div>
+</header>
+
+<!-- ============================= HERO ============================= -->
+<div id="top" class="hero">
+  <div class="hero-art" aria-hidden="true">
+    <svg viewBox="0 0 1200 520" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <g fill="none" stroke="#1D4F42" stroke-width="2">
+        <path d="M-20 90 H300 L360 150 H620 L680 90 H1220"/>
+        <path d="M-20 200 H180 L250 270 H520 L580 200 H900 L960 260 H1220"/>
+        <path d="M-20 380 H420 L470 330 H760 L820 390 H1220"/>
+        <path d="M120 -20 V120 M760 -20 V90 M340 540 V420 M1040 540 V400"/>
+      </g>
+      <!-- the live trace -->
+      <path class="pulse" d="M-20 200 H180 L250 270 H520 L580 200 H900 L960 260 H1220"
+            fill="none" stroke="#E7B75F" stroke-width="2.5" stroke-linecap="round"/>
+      <g fill="#0B2A22" stroke="#C4832F" stroke-width="2">
+        <circle cx="300" cy="90" r="6"/><circle cx="620" cy="150" r="6"/>
+        <circle cx="180" cy="200" r="6"/><circle cx="900" cy="200" r="6"/>
+        <circle cx="470" cy="330" r="6"/><circle cx="820" cy="390" r="6"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="wrap">
+    <h1>From schematic to a working board.</h1>
+    <p class="lede">PCB design, circuit development, 3D design and fabrication, prototyping and repair — plus the components to build it. Fourteen years on the bench, serving industry, labs and students.</p>
+    <div class="hero-actions">
+      <a class="btn btn-solid" href="https://wa.me/919818419049">Send your requirement on WhatsApp</a>
+      <a class="btn" href="mailto:satya4connect@gmail.com">Email us</a>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== NUMBERS STRIP =========================
+     Edit or delete any of these three if the figures don't fit. -->
+<div class="strip">
+  <div class="wrap">
+    <div class="spec"><b>14+ years</b> on PCB design and repair</div>
+    <div class="spec"><b>1–500 boards</b> prototype to small batch</div>
+    <div class="spec"><b>Same-day</b> reply on WhatsApp</div>
+  </div>
+</div>
+
+<!-- =========================== SERVICES =========================== -->
+<section id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>What we do</h2>
+      <p>Send a sketch, a schematic, a Gerber file or just a working sample — we can start from any of them.</p>
+    </div>
+
+    <div class="services">
+      <div class="service">
+        <span class="tag">Design</span>
+        <h3>PCB design and layout</h3>
+        <p>Single, double and multi-layer boards. Schematic capture, routing, and Gerber files ready for fabrication.</p>
+      </div>
+      <div class="service">
+        <span class="tag">Development</span>
+        <h3>Circuit design</h3>
+        <p>Analog, digital and microcontroller circuits built around what your product actually needs to do.</p>
+      </div>
+      <div class="service">
+        <span class="tag">Build</span>
+        <h3>Prototyping and testing</h3>
+        <p>Assembled prototypes, soldering, and bench testing before you commit to a production run.</p>
+      </div>
+      <div class="service">
+        <span class="tag">Supply</span>
+        <h3>Electronic components</h3>
+        <p>ICs, sensors, passives, connectors, modules and development boards — sourced in the quantity you need.</p>
+      </div>
+      <div class="service">
+        <span class="tag">Service</span>
+        <h3>Repair</h3>
+        <p>Fault finding and board-level repair for industrial equipment, instruments and lab electronics.</p>
+      </div>
+      <div class="service">
+        <span class="tag">Support</span>
+        <h3>Student and college projects</h3>
+        <p>Guidance, parts and working hardware for final-year and lab projects, with the design explained to you.</p>
+      </div>
+      <div class="service">
+        <span class="tag">Design + Build</span>
+        <h3>3D designing and fabrication</h3>
+        <p>3D modelling of enclosures and mechanical parts, followed by 3D printing or fabrication — built to fit your board and your product.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ ABOUT ============================= -->
+<section id="about" class="about">
+  <div class="wrap about-grid">
+    <div>
+      <h2>About us</h2>
+      <p>SP PCB Design is a small electronics workshop in Noida, Uttar Pradesh. We have spent fourteen years designing circuit boards, repairing equipment and supplying components — which means the person who designs your board is the same person who will pick up the phone when something doesn't work.</p>
+      <p>We take on jobs of any size, from one repaired board to a batch of prototypes, and we are happy to talk through a design before you spend anything.</p>
+    </div>
+    <div>
+      <ul class="who">
+        <li>Industrial and manufacturing units</li>
+        <li>Research and testing laboratories</li>
+        <li>Startups building first hardware</li>
+        <li>Engineering students and colleges</li>
+        <li>Repair and service workshops</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- =========================== CONTACT ============================ -->
+<section id="contact">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Get in touch</h2>
+      <p>Tell us what you are building and we will tell you what it takes.</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-item">
+        <span>Phone</span>
+        <a href="tel:+919818419049">+91 98184 19049</a>
+      </div>
+      <div class="contact-item">
+        <span>WhatsApp</span>
+        <a href="https://wa.me/919818419049">Message us</a>
+      </div>
+      <div class="contact-item">
+        <span>Email</span>
+        <a href="mailto:satya4connect@gmail.com">satya4connect@gmail.com</a>
+      </div>
+      <div class="contact-item">
+        <span>Location</span>
+        <strong>Noida, Uttar Pradesh</strong>
+      </div>
+    </div>
+
+    <a class="btn btn-solid" href="https://wa.me/919818419049">Start on WhatsApp</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 SP PCB Design</span>
+    <span>PCB design · Prototyping · Components · Repair</span>
+  </div>
+</footer>
+
+<a class="float-wa" href="https://wa.me/919818419049">WhatsApp</a>
+
+</body>
+</html>
